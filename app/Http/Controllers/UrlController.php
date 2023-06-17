@@ -16,7 +16,7 @@ class UrlController extends Controller
     {
         $urls = Url::select("title", "url", "description")->get();
 
-        return Inertia::render("Pages/Urls/Index", [
+        return Inertia::render("Urls/Index", [
             "urls" => $urls
         ]);
     }
@@ -26,7 +26,11 @@ class UrlController extends Controller
      */
     public function create()
     {
-        //
+        $urls = Url::select("title", "url", "description")->get();
+
+        return Inertia::render("Urls/Create", [
+            "urls" => $urls
+        ]);
     }
 
     /**
