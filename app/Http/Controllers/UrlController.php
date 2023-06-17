@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
+use Inertia\Inertia;
 
 class UrlController extends Controller
 {
@@ -13,7 +14,9 @@ class UrlController extends Controller
      */
     public function index()
     {
-        //
+        $urls = Url::select("title", "url", "description")->get();
+
+        return Inertia::render("Pages/Urls/Index");
     }
 
     /**
