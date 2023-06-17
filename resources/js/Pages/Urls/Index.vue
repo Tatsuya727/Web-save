@@ -21,6 +21,14 @@ const search_items = [
 const drawer = ref(null);
 </script>
 
+<script>
+export default {
+    props: {
+        urls: Array,
+    },
+};
+</script>
+
 <template>
     <v-app id="inspire">
         <v-system-bar>

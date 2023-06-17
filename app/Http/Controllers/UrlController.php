@@ -16,7 +16,9 @@ class UrlController extends Controller
     {
         $urls = Url::select("title", "url", "description")->get();
 
-        return Inertia::render("Pages/Urls/Index");
+        return Inertia::render("Pages/Urls/Index", [
+            "urls" => $urls
+        ]);
     }
 
     /**
