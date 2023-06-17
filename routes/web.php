@@ -16,6 +16,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::get("/vue", function() {
+    return Inertia::render("Component/App");
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

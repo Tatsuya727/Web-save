@@ -6,6 +6,22 @@ import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+import App from "./Pages/App.vue";
+import "@mdi/font/css/materialdesignicons.css";
+
+// Vuetify
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+
+const vuetify = createVuetify({
+    components,
+    directives,
+});
+
+createApp(App).use(vuetify).mount("#app");
+
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
