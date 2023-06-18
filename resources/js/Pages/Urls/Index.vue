@@ -73,9 +73,10 @@
 <script setup>
 import { ref } from "vue";
 
-// defineProps({
-//     urls: Array,
-// });
+// definePropsを使用してpropsを定義
+const props = defineProps({
+    urls: Array,
+});
 
 const cards = ["Today", "Yesterday"];
 const links = [
@@ -97,13 +98,4 @@ const search_items = [
 const drawer = ref(null);
 </script>
 
-<script>
-export default {
-    props: {
-        urls: {
-            type: Array,
-            required: true,
-        },
-    },
-};
-</script>
+<style scoped></style>

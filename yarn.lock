@@ -149,6 +149,13 @@
     deepmerge "^4.0.0"
     qs "^6.9.0"
 
+"@inertiajs/progress@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@inertiajs/progress/-/progress-0.2.7.tgz#b42ac849b6f227fe8a45a91d663719c5bd362131"
+  integrity sha512-zxadfLlBPIUvTE9g5k71V/Ayzo8P9kEp4hV4UKywCC2kURufxV7bycbZqU1GeMCFGDT+VRrjXNl676Pwwa1HoQ==
+  dependencies:
+    nprogress "^0.2.0"
+
 "@inertiajs/vue3@^1.0.0":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@inertiajs/vue3/-/vue3-1.0.8.tgz#314c59570a09b3d8d6f4aec5460b96b7b5bcb069"
