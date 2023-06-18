@@ -14,7 +14,9 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $urls = Url::select("title", "url", "description")->get();
+        $urls = Url::select("title", "url", "description", "created_at", "updated_at")
+        ->orderBy("created_at", "desc")
+        ->get();
 
         return Inertia::render("Urls/Index", [
             "urls" => $urls

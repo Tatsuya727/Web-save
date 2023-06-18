@@ -41,11 +41,18 @@
                         label="検索する"
                         :items="search_items"
                     ></v-autocomplete>
-                    <v-col v-for="card in cards" :key="card" cols="12">
+                    <v-col
+                        v-for="(urlsByDate, date) in urlsGroupedByDate"
+                        :key="date"
+                        cols="12"
+                    >
                         <v-card>
                             <v-list lines="two">
-                                <v-list-subheader>{{ card }}</v-list-subheader>
-                                <template v-for="url in urls" :key="url.id">
+                                <v-list-subheader>{{ date }}</v-list-subheader>
+                                <template
+                                    v-for="url in urlsByDate"
+                                    :key="url.id"
+                                >
                                     <v-list-item>
                                         <template v-slot:prepend>
                                             <v-avatar
@@ -58,6 +65,7 @@
                                         </v-list-item-title>
 
                                         <v-list-item-subtitle>
+                                            {{ url.description }}
                                         </v-list-item-subtitle>
                                     </v-list-item>
                                 </template>
@@ -71,14 +79,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 // definePropsを使用してpropsを定義
 const props = defineProps({
     urls: Array,
 });
 
-const cards = ["Today", "Yesterday"];
+const urlsGroupedByDate = computed(() => {
+    return props.urls.reduce((groupedUrls, url) => {
+        const date = url.created_at.split("T")[0]; // Assuming the date is in '2023-06-16T00:00:00.000Z' format
+        if (!groupedUrls[date]) {
+            groupedUrls[date] = [];
+        }
+        groupedUrls[date].push(url);
+        return groupedUrls;
+    }, {});
+});
+
 const links = [
     ["mdi-inbox-arrow-down", "Inbox"],
     ["mdi-send", "Send"],
