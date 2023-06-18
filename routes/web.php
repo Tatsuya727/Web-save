@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UrlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,18 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Route::get("/urls", [UrlController::class, "index"])->name("urls.index");
+
+Route::resource("urls", UrlController::class);
+
+// Route::get("/vue", function() {
+//     return Inertia::render("Component/App");
+// });
+
+// Route::get("/urls", function() {
+//     return Inertia::render("Pages/Urls/Index");
+// });
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
