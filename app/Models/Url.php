@@ -12,6 +12,7 @@ class Url extends Model
     protected $fillable = [
         "url",
         "title",
-        "description"
+        "description",
+        "favicon"
     ];
 }
