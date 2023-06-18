@@ -12,11 +12,7 @@
 
         <v-navigation-drawer v-model="drawer">
             <v-sheet color="grey-lighten-4" class="pa-4">
-                <v-avatar
-                    class="mb-4"
-                    color="grey-darken-1"
-                    size="64"
-                ></v-avatar>
+                <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
 
                 <div>john@google.com</div>
             </v-sheet>
@@ -37,27 +33,15 @@
         <v-main>
             <v-container class="py-8 px-6" fluid>
                 <v-row>
-                    <v-autocomplete
-                        label="検索する"
-                        :items="search_items"
-                    ></v-autocomplete>
-                    <v-col
-                        v-for="(urlsByDate, date) in urlsGroupedByDate"
-                        :key="date"
-                        cols="12"
-                    >
+                    <v-autocomplete label="検索する" :items="search_items"></v-autocomplete>
+                    <v-col v-for="(urlsByDate, date) in urlsGroupedByDate" :key="date" cols="12">
                         <v-card>
                             <v-list lines="two">
                                 <v-list-subheader>{{ date }}</v-list-subheader>
-                                <template
-                                    v-for="url in urlsByDate"
-                                    :key="url.id"
-                                >
+                                <template v-for="url in urlsByDate" :key="url.id">
                                     <v-list-item>
                                         <template v-slot:prepend>
-                                            <v-avatar
-                                                color="grey-darken-1"
-                                            ></v-avatar>
+                                            <v-avatar color="grey-darken-1"></v-avatar>
                                         </template>
 
                                         <v-list-item-title>
@@ -74,21 +58,28 @@
                     </v-col>
                 </v-row>
             </v-container>
+            <Pagination class="text-center mb-10" :links="urls.links"></Pagination>
         </v-main>
     </v-app>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from 'vue';
+import Pagination from '@/Components/Pagination.vue';
 
 // definePropsを使用してpropsを定義
 const props = defineProps({
-    urls: Array,
+    urls: Object,
+});
+
+onMounted(() => {
+    console.log(props.urls);
+    console.log(props.urls.last_page);
 });
 
 const urlsGroupedByDate = computed(() => {
-    return props.urls.reduce((groupedUrls, url) => {
-        const date = url.created_at.split("T")[0]; // Assuming the date is in '2023-06-16T00:00:00.000Z' format
+    return props.urls.data.reduce((groupedUrls, url) => {
+        const date = url.created_at.split('T')[0]; // Assuming the date is in '2023-06-16T00:00:00.000Z' format
         if (!groupedUrls[date]) {
             groupedUrls[date] = [];
         }
@@ -98,20 +89,13 @@ const urlsGroupedByDate = computed(() => {
 });
 
 const links = [
-    ["mdi-inbox-arrow-down", "Inbox"],
-    ["mdi-send", "Send"],
-    ["mdi-delete", "Trash"],
-    ["mdi-alert-octagon", "Spam"],
+    ['mdi-inbox-arrow-down', 'Inbox'],
+    ['mdi-send', 'Send'],
+    ['mdi-delete', 'Trash'],
+    ['mdi-alert-octagon', 'Spam'],
 ];
 
-const search_items = [
-    "トマト",
-    "キュウリ",
-    "ナス",
-    "ピーマン",
-    "オクラ",
-    "モロヘイヤ",
-];
+const search_items = ['トマト', 'キュウリ', 'ナス', 'ピーマン', 'オクラ', 'モロヘイヤ'];
 
 const drawer = ref(null);
 </script>

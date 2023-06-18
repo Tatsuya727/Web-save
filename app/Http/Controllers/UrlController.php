@@ -16,7 +16,7 @@ class UrlController extends Controller
     {
         $urls = Url::select("title", "url", "description", "created_at", "updated_at")
         ->orderBy("created_at", "desc")
-        ->get();
+        ->paginate(5);
 
         return Inertia::render("Urls/Index", [
             "urls" => $urls

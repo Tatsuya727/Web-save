@@ -31,10 +31,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(vuetify)
-            .mount("#app")
-            .use(plugin)
-            .use(ZiggyVue, Ziggy)
-            .mount(el);
+            .mount("#app");
     },
     progress: {
         color: "#4B5563",
