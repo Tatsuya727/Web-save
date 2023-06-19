@@ -98,27 +98,13 @@ const drawer = ref(null);
         </v-system-bar>
 
         <v-navigation-drawer v-model="drawer">
-            <v-sheet color="grey-lighten-4" class="pa-4">
-                <!-- <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar> -->
+            <!-- <v-sheet color="grey-lighten-4" class="pa-4">
+                <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
 
                 <div>
-                    <div class="text-center">
-                        <v-btn color="success">
-                            URLを登録
-
-                            <v-dialog v-model="dialog" activator="parent" width="auto">
-                                <v-sheet width="800" class="mx-10">
-                                    <v-form @submit.prevent="storeUrl">
-                                        <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
-                                        <v-btn type="submit" block class="bg-green mb-5">登録</v-btn>
-                                        <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete>
-                                    </v-form>
-                                </v-sheet>
-                            </v-dialog>
-                        </v-btn>
-                    </div>
+                    <div class="text-center"></div>
                 </div>
-            </v-sheet>
+            </v-sheet> -->
 
             <v-divider></v-divider>
 
@@ -138,6 +124,19 @@ const drawer = ref(null);
                 <v-row>
                     <input label="Search" v-model="search" class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600" placeholder="Search..." />
                     <button class="bg-blue-300 py-2 px-2 border border-indigo-600" @click="searchUrls">検索</button>
+                    <v-btn class="ml-10" color="success">
+                        URLを登録
+
+                        <v-dialog v-model="dialog" activator="parent" width="auto">
+                            <v-sheet width="800" class="mx-10">
+                                <v-form @submit.prevent="storeUrl">
+                                    <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
+                                    <v-btn type="submit" block class="bg-green mb-5">登録</v-btn>
+                                    <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete>
+                                </v-form>
+                            </v-sheet>
+                        </v-dialog>
+                    </v-btn>
 
                     <v-col v-for="(urlsByDate, date) in urlsGroupedByDate" :key="date" cols="12">
                         <v-card>
