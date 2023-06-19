@@ -87,16 +87,6 @@ const drawer = ref(null);
 
 <template>
     <v-app>
-        <v-system-bar>
-            <v-spacer></v-spacer>
-
-            <v-icon>mdi-square</v-icon>
-
-            <v-icon>mdi-circle</v-icon>
-
-            <v-icon>mdi-triangle</v-icon>
-        </v-system-bar>
-
         <v-navigation-drawer v-model="drawer">
             <!-- <v-sheet color="grey-lighten-4" class="pa-4">
                 <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
@@ -120,24 +110,27 @@ const drawer = ref(null);
         </v-navigation-drawer>
 
         <v-main>
-            <v-container class="py-8 px-6" fluid>
-                <v-row>
+            <v-app-bar :elevation="2">
+                <div class="ml-10 text-center">
                     <input label="Search" v-model="search" class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600" placeholder="Search..." />
                     <button class="bg-blue-300 py-2 px-2 border border-indigo-600" @click="searchUrls">検索</button>
-                    <v-btn class="ml-10" color="success">
+                    <v-btn class="ml-10" color="primary" variant="outlined">
                         URLを登録
 
                         <v-dialog v-model="dialog" activator="parent" width="auto">
                             <v-sheet width="800" class="mx-10">
                                 <v-form @submit.prevent="storeUrl">
                                     <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
-                                    <v-btn type="submit" block class="bg-green mb-5">登録</v-btn>
-                                    <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete>
+                                    <v-btn type="submit" block class="bg-green">登録</v-btn>
+                                    <!-- <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete> -->
                                 </v-form>
                             </v-sheet>
                         </v-dialog>
                     </v-btn>
-
+                </div>
+            </v-app-bar>
+            <v-container class="py-8 px-6" fluid>
+                <v-row>
                     <v-col v-for="(urlsByDate, date) in urlsGroupedByDate" :key="date" cols="12">
                         <v-card>
                             <v-list lines="two">
