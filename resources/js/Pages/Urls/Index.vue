@@ -2,6 +2,7 @@
 import { ref, computed, reactive } from 'vue';
 import Pagination from '@/Components/Pagination.vue';
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-vue3';
 
 // definePropsを使用してpropsを定義
 const props = defineProps({
@@ -63,38 +64,19 @@ const links = [
     ['mdi-alert-octagon', 'Spam'],
 ];
 
-const search_items = [
-    {
-        prependIcon: 'mdi-clock-outline',
-        title: 'トマト',
-    },
-    {
-        prependIcon: 'mdi-clock-outline',
-        title: 'キャベツ',
-    },
-    {
-        prependIcon: 'mdi-clock-outline',
-        title: 'レタス',
-    },
-    {
-        prependIcon: 'mdi-clock-outline',
-        title: 'ブロッコリー',
-    },
-];
-
 const drawer = ref(null);
 </script>
 
 <template>
     <v-app>
         <v-navigation-drawer v-model="drawer">
-            <!-- <v-sheet color="grey-lighten-4" class="pa-4">
-                <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
+            <v-sheet color="grey-lighten-4" class="pa-4">
+                <!-- <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar> -->
 
                 <div>
-                    <div class="text-center"></div>
+                    <div>{{ $page.props.auth.user.name }}</div>
                 </div>
-            </v-sheet> -->
+            </v-sheet>
 
             <v-divider></v-divider>
 
@@ -128,6 +110,9 @@ const drawer = ref(null);
                         </v-dialog>
                     </v-btn>
                 </div>
+                <template v-slot:append>
+                    <Link href="/logout" method="post" as="button" class="ml-10 bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> ログアウト </Link>
+                </template>
             </v-app-bar>
             <v-container class="py-8 px-6" fluid>
                 <v-row>

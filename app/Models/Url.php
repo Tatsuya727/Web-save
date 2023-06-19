@@ -20,7 +20,9 @@ class Url extends Model
     {
         if ($search) {
             return $query->where('title', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhere('url', 'like', "%{$search}%")
+                ->orWhere('favicon', 'like', "%{$search}%");
         }
 
         return $query;
