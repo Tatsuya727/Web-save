@@ -17,17 +17,10 @@ use App\Http\Controllers\UrlController;
 |
 */
 
-// Route::get("/urls", [UrlController::class, "index"])->name("urls.index");
 
-Route::resource("urls", UrlController::class);
+Route::resource("urls", UrlController::class)
+->middleware("auth", "verified");
 
-// Route::get("/vue", function() {
-//     return Inertia::render("Component/App");
-// });
-
-// Route::get("/urls", function() {
-//     return Inertia::render("Pages/Urls/Index");
-// });
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
