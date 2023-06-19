@@ -57,7 +57,24 @@ const links = [
     ['mdi-alert-octagon', 'Spam'],
 ];
 
-const search_items = ['トマト', 'キュウリ', 'ナス', 'ピーマン', 'オクラ', 'モロヘイヤ'];
+const search_items = [
+    {
+        prependIcon: 'mdi-clock-outline',
+        title: 'トマト',
+    },
+    {
+        prependIcon: 'mdi-clock-outline',
+        title: 'キャベツ',
+    },
+    {
+        prependIcon: 'mdi-clock-outline',
+        title: 'レタス',
+    },
+    {
+        prependIcon: 'mdi-clock-outline',
+        title: 'ブロッコリー',
+    },
+];
 
 const drawer = ref(null);
 </script>
@@ -76,19 +93,19 @@ const drawer = ref(null);
 
         <v-navigation-drawer v-model="drawer">
             <v-sheet color="grey-lighten-4" class="pa-4">
-                <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
+                <!-- <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar> -->
 
                 <div>
                     <div class="text-center">
-                        <v-btn color="primary">
+                        <v-btn color="success">
                             URLを登録
 
                             <v-dialog v-model="dialog" activator="parent" width="auto">
                                 <v-sheet width="800" class="mx-10">
                                     <v-form @submit.prevent="storeUrl">
                                         <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
-                                        <!-- <v-autocomplete clearable chips label="タグ" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" multiple></v-autocomplete> -->
-                                        <v-btn type="submit" block class="mt-2 bg-blue">登録</v-btn>
+                                        <v-btn type="submit" block class="bg-green mb-5">登録</v-btn>
+                                        <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete>
                                     </v-form>
                                 </v-sheet>
                             </v-dialog>
@@ -113,7 +130,7 @@ const drawer = ref(null);
         <v-main>
             <v-container class="py-8 px-6" fluid>
                 <v-row>
-                    <v-autocomplete label="検索する" :items="search_items"></v-autocomplete>
+                    <v-autocomplete :items="search_items" append-inner-icon="mdi-microphone" auto-select-first class="flex-full-width" density="comfortable" item-props menu-icon="" placeholder="Search Google or type a URL" prepend-inner-icon="mdi-magnify" rounded theme="light" variant="solo"></v-autocomplete>
                     <v-col v-for="(urlsByDate, date) in urlsGroupedByDate" :key="date" cols="12">
                         <v-card>
                             <v-list lines="two">
