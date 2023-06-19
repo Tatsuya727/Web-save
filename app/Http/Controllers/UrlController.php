@@ -18,7 +18,7 @@ class UrlController extends Controller
     {
         $urls = Url::select("title", "url", "description", "favicon", "created_at", "updated_at")
         ->orderBy("created_at", "desc")
-        ->paginate(5);
+        ->paginate(10);
 
         return Inertia::render("Urls/Index", [
             "urls" => $urls
@@ -55,14 +55,14 @@ class UrlController extends Controller
 
         $data = json_decode($response->getBody(), true);
 
-        Url::create([
+        $url = Url::create([
             "url" => $request->url,
             "title" => $data["meta"]["title"],
             "favicon" => $data["meta"]["site"]["favicon"],
-            "description" => $data["meta"]["description"]
+            "description" => $data["meta"]["description"] ?? ""
         ]);
 
-        return to_route("urls.index");
+        return redirect()->back()->with('success', 'URL has been saved.')->with('url', $url);
     }
 
     /**

@@ -36,7 +36,18 @@ const urlsGroupedByDate = computed(() => {
 });
 
 const storeUrl = () => {
-    Inertia.post('/urls', form);
+    Inertia.post('/urls', form, {
+        onSuccess: (page) => {
+            if (page.props.flash.success) {
+                dialog.value = false;
+                form.url = '';
+                form.title = '';
+                form.description = '';
+                form.favicon = '';
+                props.urls.data.unshift(page.props.flash.url);
+            }
+        },
+    });
 };
 
 const links = [
@@ -77,7 +88,7 @@ const drawer = ref(null);
                                     <v-form @submit.prevent="storeUrl">
                                         <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
                                         <!-- <v-autocomplete clearable chips label="タグ" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']" multiple></v-autocomplete> -->
-                                        <v-btn type="submit" block class="mt-2">Submit</v-btn>
+                                        <v-btn type="submit" block class="mt-2 bg-blue">登録</v-btn>
                                     </v-form>
                                 </v-sheet>
                             </v-dialog>
