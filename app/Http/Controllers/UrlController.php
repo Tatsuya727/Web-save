@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
 use Inertia\Inertia;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 
 class UrlController extends Controller
@@ -14,11 +15,14 @@ class UrlController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $urls = Url::select("title", "url", "description", "favicon", "created_at", "updated_at")
-        ->orderBy("created_at", "desc")
-        ->paginate(10);
+        $search = $request->get('search');
+
+        $urls = Url::searchUrl($search)
+            ->select("title", "url", "description", "favicon", "created_at", "updated_at")
+            ->orderBy("created_at", "desc")
+            ->paginate(10);
 
         return Inertia::render("Urls/Index", [
             "urls" => $urls

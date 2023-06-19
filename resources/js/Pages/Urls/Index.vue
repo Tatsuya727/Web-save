@@ -17,6 +17,8 @@ const form = reactive({
     favicon: '',
 });
 
+const search = ref('');
+
 const rules = [
     (value) => {
         if (value) return true;
@@ -48,6 +50,10 @@ const storeUrl = () => {
             }
         },
     });
+};
+
+const searchUrls = () => {
+    Inertia.get(route('urls.index', { search: search.value }));
 };
 
 const links = [
@@ -130,7 +136,9 @@ const drawer = ref(null);
         <v-main>
             <v-container class="py-8 px-6" fluid>
                 <v-row>
-                    <v-autocomplete :items="search_items" append-inner-icon="mdi-microphone" auto-select-first class="flex-full-width" density="comfortable" item-props menu-icon="" placeholder="Search Google or type a URL" prepend-inner-icon="mdi-magnify" rounded theme="light" variant="solo"></v-autocomplete>
+                    <input label="Search" v-model="search" class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600" placeholder="Search..." />
+                    <button class="bg-blue-300 py-2 px-2 border border-indigo-600" @click="searchUrls">検索</button>
+
                     <v-col v-for="(urlsByDate, date) in urlsGroupedByDate" :key="date" cols="12">
                         <v-card>
                             <v-list lines="two">

@@ -15,4 +15,15 @@ class Url extends Model
         "description",
         "favicon"
     ];
+
+    public function scopeSearchUrl($query, $search)
+    {
+        if ($search) {
+            return $query->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        return $query;
+    }
+
 }
