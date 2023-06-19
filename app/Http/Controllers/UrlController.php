@@ -56,6 +56,8 @@ class UrlController extends Controller
                 "Authorization" => "Basic YmFiYXRhdHN1eWFhQGdtYWlsLmNvbTpuVFFubEJTMFpGcGJGRVlxYnZQUg=="
             ]
         ]);
+        
+        
 
         $data = json_decode($response->getBody(), true);
 

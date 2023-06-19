@@ -16,6 +16,7 @@ const form = reactive({
     title: '',
     description: '',
     favicon: '',
+    errors: {},
 });
 
 const search = ref('');
@@ -38,19 +39,27 @@ const urlsGroupedByDate = computed(() => {
     }, {});
 });
 
-const storeUrl = () => {
-    Inertia.post('/urls', form, {
-        onSuccess: (page) => {
-            if (page.props.flash.success) {
-                dialog.value = false;
-                form.url = '';
-                form.title = '';
-                form.description = '';
-                form.favicon = '';
-                props.urls.data.unshift(page.props.flash.url);
-            }
-        },
-    });
+const storeUrl = async () => {
+    try {
+        Inertia.post('/urls', form, {
+            onSuccess: (page) => {
+                if (page.props.flash.success) {
+                    dialog.value = false;
+                    form.url = '';
+                    form.title = '';
+                    form.description = '';
+                    form.favicon = '';
+                    props.urls.data.unshift(page.props.flash.url);
+                }
+            },
+            onError: (errors) => {
+                form.errors = errors;
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        errorMessage = error.message;
+    }
 };
 
 const searchUrls = () => {
@@ -102,7 +111,7 @@ const drawer = ref(null);
                         <v-dialog v-model="dialog" activator="parent" width="auto">
                             <v-sheet width="800" class="mx-10">
                                 <v-form @submit.prevent="storeUrl">
-                                    <v-text-field v-model="form.url" :rules="rules" label="URL"></v-text-field>
+                                    <v-text-field v-model="form.url" :rules="rules" label="URL" :error-messages="form.errors.url"></v-text-field>
                                     <v-btn type="submit" block class="bg-green">登録</v-btn>
                                     <!-- <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete> -->
                                 </v-form>
