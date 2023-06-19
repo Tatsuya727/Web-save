@@ -83,13 +83,13 @@ const drawer = ref(null);
                 <!-- <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar> -->
 
                 <div>
-                    <div>{{ $page.props.auth.user.name }}</div>
+                    <div>{{ $page.props.auth.user.name }}さん</div>
                 </div>
             </v-sheet>
 
             <v-divider></v-divider>
 
-            <v-list>
+            <!-- <v-list>
                 <v-list-item v-for="[icon, text] in links" :key="icon" link>
                     <template v-slot:prepend>
                         <v-icon>{{ icon }}</v-icon>
@@ -97,12 +97,13 @@ const drawer = ref(null);
 
                     <v-list-item-title>{{ text }}</v-list-item-title>
                 </v-list-item>
-            </v-list>
+            </v-list> -->
         </v-navigation-drawer>
 
         <v-main>
             <v-app-bar :elevation="2">
                 <div class="ml-10 text-center">
+                    <v-btn href="/urls" class="mr-10" variant="text"> TOP </v-btn>
                     <input label="Search" v-model="search" class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600" placeholder="Search..." />
                     <button class="bg-blue-300 py-2 px-2 border border-indigo-600" @click="searchUrls">検索</button>
                     <v-btn class="ml-10" color="primary" variant="outlined">
