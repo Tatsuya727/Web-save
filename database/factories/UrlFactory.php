@@ -17,7 +17,10 @@ class UrlFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'url' => fake()->url(),
+            'title' => fake()->sentence(),
+            'description' => fake()->paragraph(),
+            'favicon' => fake()->url(),
         ];
     }
 }
