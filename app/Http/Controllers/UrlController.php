@@ -64,7 +64,7 @@ class UrlController extends Controller
         $url = Url::create([
             "url" => $request->url,
             "title" => $data["meta"]["title"],
-            "favicon" => $data["meta"]["site"]["favicon"],
+            "favicon" => $data["meta"]["site"]["favicon"] ?? "",
             "description" => $data["meta"]["description"] ?? ""
         ]);
 
