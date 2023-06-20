@@ -6,15 +6,23 @@ use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
 use Inertia\Inertia;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+
 
 class UrlController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $urls = Url::select("title", "url", "description")->get();
+        $search = $request->get('search');
+
+        $urls = Url::searchUrl($search)
+            ->select("title", "url", "description", "favicon", "created_at", "updated_at")
+            ->orderBy("created_at", "desc")
+            ->paginate(10);
 
         return Inertia::render("Urls/Index", [
             "urls" => $urls
@@ -38,7 +46,29 @@ class UrlController extends Controller
      */
     public function store(StoreUrlRequest $request)
     {
-        //
+        $client = new Client();
+
+        $response = $client->request("GET", "https://api.urlmeta.org/", [
+            "query" => [
+                "url" => $request->url
+            ],
+            "headers" => [
+                "Authorization" => "Basic YmFiYXRhdHN1eWFhQGdtYWlsLmNvbTpuVFFubEJTMFpGcGJGRVlxYnZQUg=="
+            ]
+        ]);
+        
+        
+
+        $data = json_decode($response->getBody(), true);
+
+        $url = Url::create([
+            "url" => $request->url,
+            "title" => $data["meta"]["title"],
+            "favicon" => $data["meta"]["site"]["favicon"],
+            "description" => $data["meta"]["description"] ?? ""
+        ]);
+
+        return redirect()->back()->with('success', 'URL has been saved.')->with('url', $url);
     }
 
     /**

@@ -12,6 +12,20 @@ class Url extends Model
     protected $fillable = [
         "url",
         "title",
-        "description"
+        "description",
+        "favicon"
     ];
+
+    public function scopeSearchUrl($query, $search)
+    {
+        if ($search) {
+            return $query->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhere('url', 'like', "%{$search}%")
+                ->orWhere('favicon', 'like', "%{$search}%");
+        }
+
+        return $query;
+    }
+
 }
