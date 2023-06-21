@@ -1,5 +1,5 @@
 # Stage 1: Build Laravel Backend with Composer
-FROM php:7.4-fpm as builder
+FROM php:8.1-fpm as builder
 
 WORKDIR /app
 
