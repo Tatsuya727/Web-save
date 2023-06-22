@@ -44,7 +44,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install npm dependencies
-RUN npm ci
+RUN npm install
 
 # Copy the application code to the container
 COPY . .
