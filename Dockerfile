@@ -50,7 +50,7 @@ RUN npm install
 COPY . .
 
 # Build Vue.js
-RUN npm run dev
+RUN npm run production
 
 # Stage 3: Setup Nginx and PHP-FPM for serving application
 FROM nginx:1.19-alpine
