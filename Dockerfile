@@ -18,9 +18,9 @@ WORKDIR /var/www
 COPY . /var/www
 RUN composer install
 
-# Node.js and NPMのインストール
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
+# Node.jsとNPMのインストール
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get -y install nodejs
 
 # Vue.jsの依存関係をインストール
 COPY package*.json ./
