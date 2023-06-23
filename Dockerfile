@@ -18,6 +18,14 @@ WORKDIR /var/www
 COPY . /var/www
 RUN composer install
 
+# Node.js and NPMのインストール
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+
+# Vue.jsの依存関係をインストール
+COPY package*.json ./
+RUN npm install
+
 CMD php artisan serve --host=0.0.0.0 --port=8080
 
 EXPOSE 8080
