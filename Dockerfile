@@ -25,6 +25,7 @@ RUN apt-get -y install nodejs
 # Vue.jsの依存関係をインストール
 COPY package*.json ./
 RUN npm install
+RUN npm run build
 
 CMD php artisan serve --host=0.0.0.0 --port=8080
 
