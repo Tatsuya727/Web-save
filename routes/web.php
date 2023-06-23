@@ -21,6 +21,11 @@ use App\Http\Controllers\UrlController;
 Route::resource("urls", UrlController::class)
 ->middleware("auth", "verified");
 
+// Route::get('/', function () {
+//     return redirect()->route('urls.index');
+// })->name('home')->middleware('auth');
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
