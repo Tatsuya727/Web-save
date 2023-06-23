@@ -18,21 +18,19 @@ use App\Http\Controllers\UrlController;
 */
 
 
-Route::resource("urls", UrlController::class)
-->middleware("auth", "verified");
+
 
 // Route::get('/', function () {
 //     return redirect()->route('urls.index');
 // })->name('home')->middleware('auth');
 
-
+Route::resource("urls", UrlController::class)
+->middleware("auth", "verified");
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
 });
 

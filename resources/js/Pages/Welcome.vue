@@ -1,7 +1,6 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import { ref, onMounted, onUnmounted } from 'vue';
-import '../bootstrap';
 
 defineProps({
     canLogin: {
@@ -9,14 +8,6 @@ defineProps({
     },
     canRegister: {
         type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
     },
 });
 
@@ -34,10 +25,10 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('resize', updateIsMobile);
 });
+
+const cards = ['Today', 'Yesterday'];
+const drawer = ref(null);
 </script>
-<style scoped>
-@import 'resources/css/app.css';
-</style>
 
 <template>
     <Head title="Welcome" />
@@ -47,7 +38,7 @@ onUnmounted(() => {
                 <!-- <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar> -->
 
                 <div>
-                    <div>さん</div>
+                    <div>ゲストさん</div>
                 </div>
             </v-sheet>
 
@@ -67,89 +58,108 @@ onUnmounted(() => {
         <v-main>
             <div v-if="isMobile">
                 <v-app-bar :elevation="2">
-                    <div class="ml-2 text-center">
-                        <v-btn href="/urls" class="mr-2" variant="text"> TOP </v-btn>
-
-                        <v-btn color="primary" variant="outlined">
-                            URLを登録
-                            <v-dialog v-model="dialog" activator="parent" width="auto">
-                                <v-sheet width="350">
-                                    <v-form @submit.prevent="storeUrl">
-                                        <v-text-field
-                                            v-model="form.url"
-                                            :rules="rules"
-                                            label="URL"
-                                            :error-messages="form.errors.url"
-                                        ></v-text-field>
-                                        <v-btn type="submit" block class="bg-green">登録</v-btn>
-                                        <!-- <v-autocomplete clearable chips label="タグ" :items="search_items" multiple></v-autocomplete> -->
-                                    </v-form>
-                                </v-sheet>
-                            </v-dialog>
-                        </v-btn>
-                    </div>
-                    <template v-slot:append>
+                    <div class="ml-2 text-center"></div>
+                    <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                         <Link
-                            href="/logout"
-                            method="post"
-                            as="button"
+                            v-if="$page.props.auth.user"
+                            :href="route('urls.index')"
                             class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            >マイページ</Link
                         >
-                            ログアウト
-                        </Link>
-                    </template>
+
+                        <template v-else>
+                            <Link
+                                :href="route('login')"
+                                class="mx-5 bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >ログイン</Link
+                            >
+
+                            <Link
+                                v-if="canRegister"
+                                :href="route('register')"
+                                class="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                >新規登録</Link
+                            >
+                        </template>
+                    </div>
                 </v-app-bar>
             </div>
             <!-- レスポンシブ対応（モバイル） -->
             <div v-else>
                 <v-app-bar :elevation="2">
                     <div class="ml-10 text-center">
-                        <v-btn href="/urls" class="mr-10" variant="text"> TOP </v-btn>
                         <input
                             label="Search"
                             class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600"
                             placeholder="Search..."
                         />
                         <button class="bg-blue-300 py-2 px-2 border border-indigo-600">検索</button>
-                        <v-btn class="ml-10" color="primary" variant="outlined">
-                            URLを登録
-                            <v-dialog v-model="dialog" activator="parent" width="auto">
-                                <v-sheet width="800" class="mx-10">
-                                    <v-form>
-                                        <v-text-field></v-text-field>
-                                        <v-btn type="submit" block class="bg-green">登録</v-btn>
-                                    </v-form>
-                                </v-sheet>
-                            </v-dialog>
-                        </v-btn>
                     </div>
-                    <template v-slot:append>
-                        <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
+                    <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
+                        <Link
+                            v-if="$page.props.auth.user"
+                            :href="route('urls.index')"
+                            class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            >マイページ</Link
+                        >
+
+                        <template v-else>
                             <Link
-                                v-if="$page.props.auth.user"
-                                :href="route('dashboard')"
-                                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                >Dashboard</Link
+                                :href="route('login')"
+                                class="mx-5 bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                >ログイン</Link
                             >
 
-                            <template v-else>
-                                <Link
-                                    :href="route('login')"
-                                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Log in</Link
-                                >
-
-                                <Link
-                                    v-if="canRegister"
-                                    :href="route('register')"
-                                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Register</Link
-                                >
-                            </template>
-                        </div>
-                    </template>
+                            <Link
+                                v-if="canRegister"
+                                :href="route('register')"
+                                class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >新規登録</Link
+                            >
+                        </template>
+                    </div>
                 </v-app-bar>
             </div>
+            <v-container class="py-8 px-6" fluid>
+                <v-row>
+                    <div v-if="isMobile" class="ml-9">
+                        <div class="ml-10 text-center">
+                            <input
+                                label="Search"
+                                class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600"
+                                placeholder="Search..."
+                            />
+                            <button class="bg-blue-300 py-2 px-2 border border-indigo-600">
+                                検索
+                            </button>
+                        </div>
+                    </div>
+                    <v-col v-for="card in cards" :key="card" cols="12">
+                        <v-card>
+                            <v-list lines="two">
+                                <v-list-subheader>{{ card }}</v-list-subheader>
+                                <template v-for="n in 6" :key="n">
+                                    <v-list-item>
+                                        <template v-slot:prepend>
+                                            <v-avatar color="grey-darken-1"></v-avatar>
+                                        </template>
+
+                                        <v-list-item-title>URL {{ n }}</v-list-item-title>
+
+                                        <v-list-item-subtitle> サイトの説明 </v-list-item-subtitle>
+                                    </v-list-item>
+
+                                    <v-divider
+                                        v-if="n !== 6"
+                                        :key="`divider-${n}`"
+                                        inset
+                                    ></v-divider>
+                                </template>
+                            </v-list>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
         </v-main>
     </v-app>
 </template>

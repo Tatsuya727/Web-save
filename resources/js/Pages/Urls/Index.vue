@@ -81,12 +81,12 @@ const searchUrls = () => {
     Inertia.get(route('urls.index', { search: search.value }));
 };
 
-const links = [
-    ['mdi-inbox-arrow-down', 'Inbox'],
-    ['mdi-send', 'Send'],
-    ['mdi-delete', 'Trash'],
-    ['mdi-alert-octagon', 'Spam'],
-];
+// const links = [
+//     ['mdi-inbox-arrow-down', 'Inbox'],
+//     ['mdi-send', 'Send'],
+//     ['mdi-delete', 'Trash'],
+//     ['mdi-alert-octagon', 'Spam'],
+// ];
 
 const drawer = ref(null);
 </script>
