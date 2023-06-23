@@ -233,7 +233,12 @@ const drawer = ref(null);
                                         </template>
 
                                         <v-list-item-title>
-                                            <a :href="url.url" target="_blank">{{ url.title }}</a>
+                                            <a v-if="url.title" :href="url.url" target="_blank">{{
+                                                url.title
+                                            }}</a>
+                                            <a v-else :href="url.url" target="_blank">{{
+                                                url.url
+                                            }}</a>
                                         </v-list-item-title>
 
                                         <v-list-item-subtitle>
