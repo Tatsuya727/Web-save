@@ -60,26 +60,12 @@ const drawer = ref(null);
                 <v-app-bar :elevation="2">
                     <div class="ml-2 text-center"></div>
                     <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-                        <Link
-                            v-if="$page.props.auth.user"
-                            :href="route('urls.index')"
-                            class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >マイページ</Link
-                        >
+                        <Link v-if="$page.props.auth.user" :href="route('urls.index')" class="ml-5 bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">マイページ</Link>
 
                         <template v-else>
-                            <Link
-                                :href="route('login')"
-                                class="mx-5 bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                >ログイン</Link
-                            >
+                            <Link :href="route('login')" class="mx-5 bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">ログイン</Link>
 
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                >新規登録</Link
-                            >
+                            <Link v-if="canRegister" :href="route('register')" class="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded">新規登録</Link>
                         </template>
                     </div>
                 </v-app-bar>
@@ -96,26 +82,12 @@ const drawer = ref(null);
                         <button class="bg-blue-300 py-2 px-2 border border-indigo-600">検索</button>
                     </div>
                     <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-                        <Link
-                            v-if="$page.props.auth.user"
-                            :href="route('urls.index')"
-                            class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >マイページ</Link
-                        >
+                        <Link v-if="$page.props.auth.user" :href="route('urls.index')" class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">マイページ</Link>
 
                         <template v-else>
-                            <Link
-                                :href="route('login')"
-                                class="mx-5 bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                >ログイン</Link
-                            >
+                            <Link :href="route('login')" class="mx-5 bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded">ログイン</Link>
 
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                >新規登録</Link
-                            >
+                            <Link v-if="canRegister" :href="route('register')" class="bg-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">新規登録</Link>
                         </template>
                     </div>
                 </v-app-bar>
@@ -129,9 +101,7 @@ const drawer = ref(null);
                                 class="w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 border border-indigo-600"
                                 placeholder="Search..."
                             />
-                            <button class="bg-blue-300 py-2 px-2 border border-indigo-600">
-                                検索
-                            </button>
+                            <button class="bg-blue-300 py-2 px-2 border border-indigo-600">検索</button>
                         </div>
                     </div>
                     <v-col v-for="card in cards" :key="card" cols="12">
@@ -149,11 +119,7 @@ const drawer = ref(null);
                                         <v-list-item-subtitle> サイトの説明 </v-list-item-subtitle>
                                     </v-list-item>
 
-                                    <v-divider
-                                        v-if="n !== 6"
-                                        :key="`divider-${n}`"
-                                        inset
-                                    ></v-divider>
+                                    <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
                                 </template>
                             </v-list>
                         </v-card>
